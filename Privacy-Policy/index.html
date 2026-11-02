@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
 <!-- Website logo / favicon -->
-<link rel="icon" type="image/png" sizes="16x16" href="/logo_16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/logo_32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/logo_192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/logo_16x16.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="/logo_32x32.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/logo_192x192.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - WASDClick</title>
@@ -53,6 +55,15 @@
 
     <!-- Top Navigation Bar Layout -->
     <link href="privacy-policy.css" rel="stylesheet">
+<style id="policy-bg-fix">
+/* Same background look as the Home page: white page + 50% black overlay = grey,
+   starting right under the dark header block (nav bar is untouched). */
+body { background-color: #ffffff; }
+.bgblur { top: 85px; height: 2789px; background-color: rgba(0, 0, 0, 0.5); opacity: 1; }
+/* footer blocks: old "bottom:-763" had no unit, so they jumped to the top of the page */
+.bg1 { top: 2874px; bottom: auto; margin-left: 0; }
+.bottomnav { top: 2894px; bottom: auto; }
+</style>
     <div class="topnav">
         <a href="/">Home</a>
         <a href="/Music/">Music</a>
@@ -126,5 +137,28 @@
     <div class="bottomnav"></div>
     <script type="text/javascript" src="Home.js"></script>
 
+<script id="policy-bg-fix-js">
+/* Sizes the grey overlay and footer blocks to the real text height (any screen size) */
+(function () {
+  function fit() {
+    var content = document.querySelector('.policy-content');
+    var blur = document.querySelector('.bgblur');
+    var row = document.querySelector('.row');
+    var b1 = document.querySelector('.bg1');
+    var foot = document.querySelector('.bottomnav');
+    if (!content || !blur || !row || !b1 || !foot) return;
+    var end = Math.ceil(content.getBoundingClientRect().bottom + window.pageYOffset) + 60;
+    blur.style.height = (end - 85) + 'px';
+    row.style.height = (end - 92) + 'px';
+    b1.style.top = end + 'px';
+    foot.style.top = (end + 20) + 'px';
+  }
+  fit();
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
 </body>
 </html>
