@@ -11,6 +11,39 @@
      crossorigin="anonymous"></script>
     </head>
 <link href="Home.css" rel="stylesheet">
+<style id="carousel-fix">
+/* ===== Carousel fix: exact page-by-page scrolling =====
+   --visible = how many items fit on screen AND how many scroll per click.
+   Desktop / tablet: 4.  Phone portrait + phone landscape: 2. */
+.container {
+  --visible: 4;
+  --gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+}
+.container::-webkit-scrollbar { display: none; }
+.container center { display: block; text-align: left; }
+.container .box {
+  box-sizing: border-box;
+  width: calc((100% - (var(--visible) - 1) * var(--gap)) / var(--visible));
+  margin-right: var(--gap);
+  text-align: center;
+  vertical-align: top;
+}
+.container .box:nth-child(4n+1) { scroll-snap-align: start; }
+.container .imgsize { object-fit: cover; }
+.container .pad-spacer { display: inline-block; height: 1px; vertical-align: top; pointer-events: none; }
+
+/* Phone portrait AND phone landscape: 2 visible, 2 per button press */
+@media (max-width: 600px), (orientation: landscape) and (max-height: 500px) {
+  .container { --visible: 2; --gap: 10px; }
+  .container .box:nth-child(4n+1) { scroll-snap-align: none; }
+  .container .box:nth-child(2n+1) { scroll-snap-align: start; }
+}
+</style>
 <script src="jquery.min.js"></script>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,6 +217,95 @@ https://wasdclick.com</textarea>
 </div>
 <script type="text/javascript" src="Home.js"></script>
 <script type="text/javascript" src="lite-yt-embed.js"></script>
+<script id="carousel-fix-js">
+/* Carousel fix: every Back/Next press moves exactly one "page"
+   (4 items on desktop/tablet, 2 on phones) and always lands aligned. */
+(function () {
+  var containers = Array.prototype.slice.call(document.querySelectorAll('.container'));
+
+  function metrics(c) {
+    var boxes = c.querySelectorAll('.box');
+    if (!boxes.length) return null;
+    var r0 = boxes[0].getBoundingClientRect();
+    var step = boxes.length > 1 ? boxes[1].getBoundingClientRect().left - r0.left : r0.width;
+    if (!(step > 0)) return null;               // row hidden (e.g. by search)
+    var v = parseInt(getComputedStyle(c).getPropertyValue('--visible'), 10) || 4;
+    return { n: boxes.length, v: v, step: step, boxW: r0.width, page: step * v };
+  }
+
+  // Blank space after the last item so the final page lines up like every other page
+  function layout(c) {
+    var m = metrics(c);
+    if (!m) return null;
+    var host = c.querySelector('center') || c;
+    var sp = c.querySelector('.pad-spacer');
+    if (!sp) { sp = document.createElement('div'); sp.className = 'pad-spacer'; host.appendChild(sp); }
+    var rem = m.n % m.v;
+    var w = rem ? (m.v - rem) * m.step - (m.step - m.boxW) : 0;
+    sp.style.width = Math.max(0, w) + 'px';
+    return m;
+  }
+
+  function settle(c) {
+    var m = metrics(c);
+    if (m) c._page = Math.round(c.scrollLeft / m.page);
+    c._busy = false;
+  }
+
+  function go(c, dir) {
+    var m = layout(c);
+    if (!m) return;
+    var pages = Math.ceil(m.n / m.v);
+    var cur = c._busy && c._page != null ? c._page : Math.round(c.scrollLeft / m.page);
+    var next = Math.max(0, Math.min(pages - 1, cur + dir));
+    c._page = next;
+    c._busy = true;
+    c.scrollTo({ left: next * m.page, behavior: 'smooth' });
+    clearTimeout(c._timer);
+    c._timer = setTimeout(function () { settle(c); }, 700);
+  }
+
+  containers.forEach(function (c) {
+    c._page = 0;
+    c.addEventListener('scroll', function () {
+      clearTimeout(c._timer);
+      c._timer = setTimeout(function () { settle(c); }, 140);
+    }, { passive: true });
+    layout(c);
+  });
+
+  // Capture phase + stopPropagation: silences the old Home.js handlers (fixed 1286px jump)
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.next, .back') : null;
+    if (!btn) return;
+    var c = document.getElementById(btn.getAttribute('data-con'));
+    if (!c) return;
+    e.stopPropagation();
+    e.preventDefault();
+    go(c, btn.classList.contains('next') ? 1 : -1);
+  }, true);
+
+  // Screen size / rotation change: rebuild layout and stay on the same page
+  var rt;
+  function relayout() {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      containers.forEach(function (c) {
+        var keep = c._page || 0;
+        var m = layout(c);
+        if (!m) return;
+        c.style.scrollBehavior = 'auto';
+        c.scrollLeft = keep * m.page;
+        c.style.scrollBehavior = '';
+        c._busy = false;
+      });
+    }, 120);
+  }
+  window.addEventListener('resize', relayout);
+  window.addEventListener('orientationchange', relayout);
+  window.addEventListener('load', relayout);
+})();
+</script>
 <footer class="bottomnav"><script class="imgszize" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690084170238497"
      crossorigin="anonymous"></script>
 <!-- HorizontalAd1 -->
