@@ -12,6 +12,10 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690084170238497" crossorigin="anonymous"></script>
 
   <link href="Games.css" rel="stylesheet">
+<style id="nav-policy">
+/* Privacy-Policy link: same behaviour as the other nav links on this page */
+#policy { position: relative; z-index: 1; opacity: 1; transition: all .5s ease-in-out; }
+</style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
@@ -41,6 +45,7 @@
     <a target="_blank" href="/Music/" id="music"><h4>Music</h4></a>
     <a target="_blank" href="/About/" id="about"><h4>About</h4></a>
     <a target="_blank" href="/Contact/" id="contact"><h4>Contact</h4></a>
+    <a target="_blank" href="/Privacy-Policy/" id="policy"><h4>Privacy-Policy</h4></a>
   </div>
 </div>
 
@@ -92,5 +97,86 @@ https://wasdclick.com</textarea>
 <script type="text/javascript" src="Games.js"></script>
 <script type="text/javascript" src="/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script id="nav-policy-js">
+/* Burger menu animation: same code and timings as the Privacy-Policy page (5 links).
+   Runs in the capture phase so it replaces this page's older burger script. */
+(function () {
+  function el(id) { return document.getElementById(id); }
+  function parts() {
+    return {
+      hid: document.querySelector('.hid'),
+      navbtn: document.querySelector('.navbtn'),
+      navbtn1: document.querySelector('.navbtn1'),
+      home: el('home'),
+      music: el('music') || el('artists'),
+      about: el('about'),
+      contact: el('contact'),
+      policy: el('policy'),
+      spinIn: document.querySelector('.spinIn'),
+      spinOut: document.querySelector('.spinOut')
+    };
+  }
+  function shrink(link) { if (link) { link.style.padding = '0px 15px'; link.style.opacity = '0'; } }
+  function grow(link) { if (link) { link.style.padding = ''; link.style.opacity = '1'; } }
+
+  function collapse() {
+    var p = parts();
+    setTimeout(function () { shrink(p.policy); }, 0);
+    setTimeout(function () { shrink(p.contact); }, 60);
+    setTimeout(function () { shrink(p.about); }, 120);
+    setTimeout(function () {
+      shrink(p.music);
+      if (p.navbtn) p.navbtn.style.backgroundColor = '#323232';
+    }, 200);
+    setTimeout(function () {
+      shrink(p.home);
+      if (p.spinIn) p.spinIn.style.transform = 'rotate(-180deg)';
+    }, 300);
+    setTimeout(function () {
+      if (p.navbtn) p.navbtn.style.backgroundColor = '#111111';
+    }, 400);
+    setTimeout(function () {
+      if (p.navbtn) p.navbtn.style.display = 'none';
+      if (p.navbtn1) p.navbtn1.style.display = 'block';
+      if (p.spinIn) p.spinIn.style.transform = 'rotate(0deg)';
+      if (p.hid) p.hid.style.display = 'none';
+    }, 700);
+  }
+
+  function expand() {
+    var p = parts();
+    setTimeout(function () {
+      if (p.hid) p.hid.style.display = 'block';
+      if (p.spinOut) p.spinOut.style.marginTop = '1px';
+    }, 0);
+    setTimeout(function () {
+      if (p.spinOut) p.spinOut.style.transform = 'rotate(0deg)';
+      grow(p.home);
+    }, 100);
+    setTimeout(function () { grow(p.music); }, 200);
+    setTimeout(function () {
+      grow(p.about);
+      if (p.navbtn1) p.navbtn1.style.backgroundColor = '#323232';
+    }, 300);
+    setTimeout(function () { grow(p.contact); }, 400);
+    setTimeout(function () {
+      grow(p.policy);
+      if (p.navbtn1) p.navbtn1.style.backgroundColor = '#111111';
+    }, 500);
+    setTimeout(function () {
+      if (p.navbtn) p.navbtn.style.display = 'block';
+      if (p.navbtn1) p.navbtn1.style.display = 'none';
+      if (p.spinOut) { p.spinOut.style.transform = 'rotate(-180deg)'; p.spinOut.style.marginTop = '-4px'; }
+    }, 700);
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.navbtn, .navbtn1') : null;
+    if (!btn) return;
+    e.stopPropagation();   // keeps the page's older burger handlers from also running
+    if (btn.classList.contains('navbtn1')) expand(); else collapse();
+  }, true);
+})();
+</script>
 </body>
 </html>
