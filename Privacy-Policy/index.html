@@ -26,8 +26,7 @@
             color: #ffffff;
             font-size: 28px;
             margin-top: 40px;
-            border-top: 1px solid #232323;
-            padding-top: 30px;
+            border-bottom: 1px solid #232323;
             padding-bottom: 10px;
         }
         .policy-content h3 {
@@ -56,6 +55,12 @@
 
     <!-- Top Navigation Bar Layout -->
     <link href="privacy-policy.css" rel="stylesheet">
+<style id="policy-nav">
+/* nav look copied from the Contact page: same font + the link ids used by the burger animation */
+.topnav { font-family: Roboto, Arial, sans-serif; }
+#music { position: relative; z-index: 3; opacity: 1; transition: all .5s ease-in-out; }
+#policy { position: relative; z-index: 1; opacity: 1; transition: all .5s ease-in-out; }
+</style>
 <style id="policy-bg-fix">
 /* Same background look as the Home page: white page + 50% black overlay = grey,
    starting right under the dark header block (nav bar is untouched). */
@@ -66,12 +71,26 @@ body { background-color: #ffffff; }
 .bottomnav { top: 2894px; bottom: auto; }
 </style>
     <div class="topnav">
-        <a href="/">Home</a>
-        <a href="/Music/">Music</a>
-        <a href="/About/">About</a>
-        <a href="/Contact/">Contact</a>
-        <a  class="active" href="/">Privacy-Policy</a>
-    </div>
+  <button type="button" class="navbtn"><svg class="spinIn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect opacity="0.9" fill="#ffffff" x="4" y="5" width="16" height="3" rx="1.5"/>
+        <path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L18.5,10 C19.3284271,10 20,10.6715729 20,11.5 C20,12.3284271 19.3284271,13 18.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" fill="#ffffff" opacity="0.9"/>
+    </g>
+</svg></button>
+  <button type="button" class="navbtn1"><svg class="spinOut" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect opacity="0.9" fill="#ffffff" x="4" y="5" width="16" height="3" rx="1.5"/>
+        <path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L18.5,10 C19.3284271,10 20,10.6715729 20,11.5 C20,12.3284271 19.3284271,13 18.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" fill="#ffffff" opacity="0.9"/>
+    </g>
+</svg></button>
+  <div class="hid">
+    <a href="/" id="home"><h4>Home</h4></a>
+    <a href="/Music/" id="music"><h4>Music</h4></a>
+    <a href="/About/" id="about"><h4>About</h4></a>
+    <a href="/Contact/" id="contact"><h4>Contact</h4></a>
+    <a class="active" href="./" id="policy"><h4>Privacy-Policy</h4></a>
+  </div>
+</div>
 
     <!-- Header Decorative Background Block -->
     <div class="bg"></div>
@@ -138,6 +157,82 @@ body { background-color: #ffffff; }
     <div class="bottomnav"></div>
     <script type="text/javascript" src="Home.js"></script>
 
+<script id="policy-nav-js">
+/* Burger menu animation (same code and timings as the Home page's Home.js).
+     On reopen the links go back to their stylesheet padding ('') so phones keep their narrower layout. */
+(function () {
+  var hid = document.querySelector('.hid');
+  var navbtn = document.querySelector('.navbtn');
+  var navbtn1 = document.querySelector('.navbtn1');
+  var home = document.getElementById('home');
+  var music = document.getElementById('music');
+  var about = document.getElementById('about');
+  var contact = document.getElementById('contact');
+  var policy = document.getElementById('policy');
+  var spinIn = document.querySelector('.spinIn');
+  var spinOut = document.querySelector('.spinOut');
+  if (!navbtn || !navbtn1) return;
+
+  navbtn.addEventListener('click', function () {
+    setTimeout(function () {
+      if (policy) { policy.style.padding = '0px 15px'; policy.style.opacity = '0'; }
+    }, 0);
+    setTimeout(function () {
+      if (contact) { contact.style.padding = '0px 15px'; contact.style.opacity = '0'; }
+    }, 60);
+    setTimeout(function () {
+      if (about) { about.style.padding = '0px 15px'; about.style.opacity = '0'; }
+    }, 120);
+    setTimeout(function () {
+      if (music) { music.style.padding = '0px 15px'; music.style.opacity = '0'; }
+      if (navbtn) navbtn.style.backgroundColor = '#323232';
+    }, 200);
+    setTimeout(function () {
+      if (home) { home.style.padding = '0px 15px'; home.style.opacity = '0'; }
+      if (spinIn) spinIn.style.transform = 'rotate(-180deg)';
+    }, 300);
+    setTimeout(function () {
+      if (navbtn) navbtn.style.backgroundColor = '#111111';
+    }, 400);
+    setTimeout(function () {
+      if (navbtn) navbtn.style.display = 'none';
+      if (navbtn1) navbtn1.style.display = 'block';
+      if (spinIn) spinIn.style.transform = 'rotate(0deg)';
+      if (hid) hid.style.display = 'none';
+    }, 700);
+  });
+
+  navbtn1.addEventListener('click', function () {
+    setTimeout(function () {
+      if (hid) hid.style.display = 'block';
+      if (spinOut) spinOut.style.marginTop = '1px';
+    }, 0);
+    setTimeout(function () {
+      if (spinOut) spinOut.style.transform = 'rotate(0deg)';
+      if (home) { home.style.padding = ''; home.style.opacity = '1'; }
+    }, 100);
+    setTimeout(function () {
+      if (music) { music.style.padding = ''; music.style.opacity = '1'; }
+    }, 200);
+    setTimeout(function () {
+      if (about) { about.style.padding = ''; about.style.opacity = '1'; }
+      if (navbtn1) navbtn1.style.backgroundColor = '#323232';
+    }, 300);
+    setTimeout(function () {
+      if (contact) { contact.style.padding = ''; contact.style.opacity = '1'; }
+    }, 400);
+    setTimeout(function () {
+      if (policy) { policy.style.padding = ''; policy.style.opacity = '1'; }
+      if (navbtn1) navbtn1.style.backgroundColor = '#111111';
+    }, 500);
+    setTimeout(function () {
+      if (navbtn) navbtn.style.display = 'block';
+      if (navbtn1) navbtn1.style.display = 'none';
+      if (spinOut) { spinOut.style.transform = 'rotate(-180deg)'; spinOut.style.marginTop = '-4px'; }
+    }, 700);
+  });
+})();
+</script>
 <script id="policy-bg-fix-js">
 /* Sizes the grey overlay and footer blocks to the real text height (any screen size) */
 (function () {
