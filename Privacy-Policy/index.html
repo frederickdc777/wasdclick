@@ -26,8 +26,7 @@
             color: #ffffff;
             font-size: 28px;
             margin-top: 40px;
-            border-top: 1px solid #232323;
-            padding-top: 35px;
+            border-bottom: 1px solid #232323;
             padding-bottom: 10px;
         }
         .policy-content h3 {
@@ -66,7 +65,7 @@
 /* Same background look as the Home page: white page + 50% black overlay = grey,
    starting right under the dark header block (nav bar is untouched). */
 body { background-color: #ffffff; }
-.bgblur { top: 85px; height: 2789px; background-color: rgba(0, 0, 0, 0.8); opacity: 1; }
+.bgblur { top: 85px; height: 2789px; background-color: rgba(0, 0, 0, 0.5); opacity: 1; }
 /* footer blocks: old "bottom:-763" had no unit, so they jumped to the top of the page */
 .bg1 { top: 2874px; bottom: auto; margin-left: 0; }
 .bottomnav { top: 2894px; bottom: auto; }
@@ -159,8 +158,7 @@ body { background-color: #ffffff; }
     <script type="text/javascript" src="Home.js"></script>
 
 <script id="policy-nav-js">
-/* Burger menu animation (same code and timings as the Home page's Home.js).
-     On reopen the links go back to their stylesheet padding ('') so phones keep their narrower layout. */
+/* Burger menu animation (same code and timings as the Home page's Home.js) */
 (function () {
   var hid = document.querySelector('.hid');
   var navbtn = document.querySelector('.navbtn');
@@ -210,26 +208,26 @@ body { background-color: #ffffff; }
     }, 0);
     setTimeout(function () {
       if (spinOut) spinOut.style.transform = 'rotate(0deg)';
-      if (home) { home.style.padding = ''; home.style.opacity = '1'; }
+      if (home) { home.style.padding = '0px 50px'; home.style.opacity = '1'; }
     }, 100);
     setTimeout(function () {
-      if (music) { music.style.padding = ''; music.style.opacity = '1'; }
+      if (music) { music.style.padding = '0px 50px'; music.style.opacity = '1'; }
     }, 200);
     setTimeout(function () {
-      if (about) { about.style.padding = ''; about.style.opacity = '1'; }
+      if (about) { about.style.padding = '0px 50px'; about.style.opacity = '1'; }
       if (navbtn1) navbtn1.style.backgroundColor = '#323232';
     }, 300);
     setTimeout(function () {
-      if (contact) { contact.style.padding = ''; contact.style.opacity = '1'; }
+      if (contact) { contact.style.padding = '0px 50px'; contact.style.opacity = '1'; }
     }, 400);
     setTimeout(function () {
-      if (policy) { policy.style.padding = ''; policy.style.opacity = '1'; }
+      if (policy) { policy.style.padding = '0px 50px'; policy.style.opacity = '1'; }
       if (navbtn1) navbtn1.style.backgroundColor = '#111111';
     }, 500);
     setTimeout(function () {
       if (navbtn) navbtn.style.display = 'block';
       if (navbtn1) navbtn1.style.display = 'none';
-      if (spinOut) { spinOut.style.marginTop = '-4px'; spinOut.style.transform = 'rotate(-180deg)'; }
+      if (spinOut) { spinOut.style.transform = 'rotate(-180deg)'; spinOut.style.marginTop = '-4px'; }
     }, 700);
   });
 })();
