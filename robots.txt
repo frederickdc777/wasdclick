@@ -1,0 +1,15 @@
+# robots.txt for https://wasdclick.com
+# Google: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+
+# Google AdSense crawler: always allowed so ads stay relevant to the page content
+User-agent: Mediapartners-Google
+Allow: /
+
+# Everyone else (Googlebot, Bingbot, ...): the whole site is public and may be crawled.
+# CSS, JavaScript and images are intentionally NOT blocked - Google needs them
+# to render the pages the way visitors see them.
+User-agent: *
+Allow: /
+
+# Tells crawlers exactly where the list of pages is
+Sitemap: https://wasdclick.com/sitemap.xml
