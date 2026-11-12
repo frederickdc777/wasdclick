@@ -361,7 +361,7 @@ li {
 	z-index: 4;
 }
 .gameTitle::after {
-  content: "Old School"; 
+  content: "Sky Fury"; 
   position: absolute;
   left: 0;
   top: 0;
