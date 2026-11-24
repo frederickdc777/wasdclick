@@ -1,18 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Website logo / favicon -->
-<link rel="icon" href="/favicon.ico?v=2" sizes="any">
-<link rel="icon" type="image/png" sizes="16x16" href="/logo_16x16.png?v=2">
-<link rel="icon" type="image/png" sizes="32x32" href="/logo_32x32.png?v=2">
-<link rel="icon" type="image/png" sizes="192x192" href="/logo_192x192.png?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+        :root {
+            --overlay: linear-gradient(rgba(128, 128, 128, 0.25), rgba(128, 128, 128, 0.25));
+        }
 
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="7; url=https://portfolio.autos/">
+        html {
+            background-color: #1a1208; /* shows wherever the image doesn't reach */
+        }
+
+        body.background {
+            position: relative;
+            margin: 0;
+            padding: clamp(12px, 3vmin, 32px);
+            min-height: 100vh;
+            min-height: 100dvh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-wrap: break-word;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); /* keeps white text readable over bright clouds */
+        }
+
+        /* Wallpaper layer: fixed, always fills the screen */
+        body.background::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-size: 100% 100%, cover;
+            background-position: center, center;
+            background-repeat: no-repeat;
+        }
+
+        /* ===== LANDSCAPE screens (laptops, desktops, tablets) =====
+           Image is picked by screen width AND pixel density (1x / 2x retina). */
+        body.background::before {
+            background-image: var(--overlay), url('Bible-1280.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible-1280.jpg') 1x, url('Bible-1920.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible-1280.jpg') 1x, url('Bible-1920.jpg') 2x);
+        }
+        @media (min-width: 1281px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible-1920.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible-1920.jpg') 1x, url('Bible-2560.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible-1920.jpg') 1x, url('Bible-2560.jpg') 2x);
+            }
+        }
+        @media (min-width: 1921px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible-2560.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible-2560.jpg') 1x, url('Bible.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible-2560.jpg') 1x, url('Bible.jpg') 2x);
+            }
+        }
+        @media (min-width: 2561px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible.jpg');
+            }
+        }
+
+        /* ===== PORTRAIT screens (phones & tablets held upright) =====
+           Uses the tall mobile wallpaper, anchored to the top. */
+        @media (orientation: portrait) {
+            body.background::before {
+                background-position: center, top center;
+                background-image: var(--overlay), url('Bible_mobile-750.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible_mobile-750.jpg') 1x, url('Bible_mobile-1080.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible_mobile-750.jpg') 1x, url('Bible_mobile-1080.jpg') 2x);
+            }
+        }
+        @media (orientation: portrait) and (min-width: 600px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible_mobile-1080.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible_mobile-1080.jpg') 1x, url('Bible_mobile.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible_mobile-1080.jpg') 1x, url('Bible_mobile.jpg') 2x);
+            }
+        }
+        @media (orientation: portrait) and (min-width: 1100px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible_mobile.jpg');
+            }
+        }
+
+        /* ===== LANDSCAPE PHONES (short screens) =====
+           Mobile image sits at the TOP of the page at full width and scrolls with the text. */
+        @media (orientation: landscape) and (max-height: 500px) {
+            body.background::before {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-size: 100% 100%, 100% auto;
+                background-position: top center, top center;
+                background-image: var(--overlay), url('Bible_mobile-1080.jpg');
+                background-image: var(--overlay), -webkit-image-set(url('Bible_mobile-1080.jpg') 1x, url('Bible_mobile.jpg') 2x);
+                background-image: var(--overlay), image-set(url('Bible_mobile-1080.jpg') 1x, url('Bible_mobile.jpg') 2x);
+            }
+        }
+        @media (orientation: landscape) and (max-height: 500px) and (min-width: 900px) {
+            body.background::before {
+                background-image: var(--overlay), url('Bible_mobile.jpg');
+            }
+        }
+
+        /* Text scales with the device */
+        h1 { font-size: clamp(1.25rem, 4.5vmin + 0.4rem, 2.2rem); }
+        h3 { font-size: clamp(0.85rem, 2.2vmin + 0.4rem, 1.17rem); }
+        p  { font-size: clamp(0.85rem, 2vmin + 0.4rem, 1rem); }
+    </style>
+<title>The Ten Commandments from God</title>
 </head>
-<body style="background-color: #303030;">
-    <p style="color: #ffffff;">Redirecting...<br><br><br>If you are not redirected automatically, click here <a href="https://portfolio.autos/">Main Google Files</a>.</p>
+<body class="background" link="white" vlink="white" alink="#808080">
+<h1 style="color: #ffffff;">The Ten Commandments from the God of Israel Country</h1>
+<h3 style="color: #ffffff;"><br>
+    1. You shall have no other gods before me – Worship only God and reject false or foreign gods.<br>
+    2. You shall not make or worship idols – Do not bow down to graven images or statues.<br>
+    3. You shall not misuse the name of the Lord your God in vain – Treat God's name with deep respect.<br>
+    4. Remember the Sabbath day, to keep it holy – Set aside a day of rest and devotion to God.<br>
+    5. Honor your father and your mother – Show respect and care for your parents.<br>
+    6. You shall not murder – Do not unlawfully take a human life.<br>
+    7. You shall not commit adultery – Keep marital vows and respect others' marriages.<br>
+    8. You shall not steal – Do not take what belongs to someone else.<br>
+    9. You shall not bear false witness against your neighbor – Do not lie, especially in testimony or to harm others (Revelation 21:8)<br>
+    10. You shall not covet – Do not intensely desire your neighbor’s house, spouse, or possessions.</h3>
+    <p style="color: #ffffff;"><br><br>Ephesians 6:12 - "For we do not wrestle against flesh and blood"<br><br></p>
+    <p style="color: #ffffff;">Heavenly Father, we come before You in the mighty name of Jesus Christ. We ask that You surround this life, home, and mind with peace and divine protection. Every negative word, discouraging thought, spiritual weight, and unseen hindrance is rendered powerless right now. Replace every trace of heaviness, fear, and frustration with joy, clarity, and favor biblically. Cover every step with the grace from you,
+    <br>and let only good plans and promises stand. In Jesus Christ's name, Amen.<br><br>
+
+Scriptures to Stand On<br><br>
+
+• Isaiah 54:17: "No weapon that is formed against thee shall prosper; and every tongue that shall rise against thee in judgment thou shalt condemn. This is the heritage of the servants of the Lord, and their righteousness is of me, saith the Lord."<br><br>
+• 2 Corinthians 10:5: "Casting down imaginations, and every high thing that exalteth itself against the knowledge of God, and bringing into captivity every thought to the obedience of Christ."<br><br>
+• Philippians 4:7: "And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."<br><br>
+• 1 John 2:23: "Whosoever denieth the Son, the same hath not the Father: (but) he that acknowledgeth the Son hath the Father also."<br><br>
+• Matthew 10:33: "But whosoever shall deny me before men, him will I also deny before my Father which is in heaven."<br><br><br>
+
+John 14:16: "Jesus answered, I am the way and the truth and the life. No one comes to the Father except through me."<br><br>
+Matthew 19:17 Jesus said: "And he said unto him, Why callest thou me good? there is none good but one, that is, God: but if thou wilt enter into life, keep the commandments."<br>
+Jesus directs the man to keep the commandments to enter life, noting that only God is truly good.<br><br><br></p>
+    <p style="color: #ffffff;">Link 1 - Sketches Google Files<br>
+    <a href="https://drive.google.com/drive/folders/10B-YyLmjDyjwvxiNrWrWn9UMXOvZfDt2?usp=sharing">Link 1</a>.</p>
+    <p style="color: #ffffff;">Link 2 - Main Google Files<br>
+    <a href="https://drive.google.com/drive/folders/1D1hu8oxijvtjvJU0acOvkBwTjA2mbBwt?usp=sharing">Link 2</a>.</p>
 </body>
 </html>
